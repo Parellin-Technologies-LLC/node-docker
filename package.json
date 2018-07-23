@@ -4,6 +4,10 @@
 	"description": "Docker Test",
 	"main": "index.js",
 	"scripts": {
+		"docker:build": "docker build -t docker-test .",
+		"docker:login": "$(aws ecr get-login --no-include-email --region us-east-1 --profile parellin)",
+		"docker:push": "docker push 426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
+		"docker:tag": "docker tag docker-test:latest 426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
 		"lint": "eslint .",
 		"start": "node index.js",
 		"test": "mocha"

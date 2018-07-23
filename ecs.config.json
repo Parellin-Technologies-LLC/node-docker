@@ -1,0 +1,32 @@
+{
+	"family": "node-docker-test",
+	"containerDefinitions": [
+		{
+			"name": "nginx-service",
+			"image": "426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
+			"cpu": 0,
+			"memory": 128,
+			"essential": true,
+			"portMappings": [
+				{
+					"hostPort": 0,
+					"containerPort": 3000,
+					"protocol": "tcp"
+				}
+			],
+			"logConfiguration": {
+				"logDriver": "awslogs",
+				"options": {
+					"awslogs-group": "ecs-log-streaming",
+					"awslogs-region": "us-east-1"
+				}
+			},
+			"environment": [
+				{
+					"name": "NODE_ENV",
+					"value": "production"
+				}
+			]
+		}
+	]
+}
