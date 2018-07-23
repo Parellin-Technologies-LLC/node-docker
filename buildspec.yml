@@ -15,6 +15,7 @@ phases:
       - BUILD_VERSION=$(npm pack -s)
   post_build:
     commands:
+	  - echo Build name: $BUILD_VERSION
       - echo Build completed on $(date)
 artifacts:
   files:
