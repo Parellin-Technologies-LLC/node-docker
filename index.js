@@ -7,7 +7,7 @@
 
 const
 	app  = require( './server' ),
-	PORT = 3000,
+	PORT = 80,
 	HOST = '0.0.0.0';
 
 app.listen( PORT, HOST,
