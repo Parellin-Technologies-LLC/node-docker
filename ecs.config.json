@@ -1,5 +1,5 @@
 {
-	"family": "node-docker-test",
+	"family": "first-run-task-definition",
 	"containerDefinitions": [
 		{
 			"name": "nginx-service",
