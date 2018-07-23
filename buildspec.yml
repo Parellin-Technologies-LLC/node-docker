@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm install -g mocha
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+  build:
+    commands:
+      - npm lint
+      - npm test
+      - BUILD_VERSION=$(npm pack -s)
+  post_build:
+    commands:
+      - echo Build completed on $(date)
+artifacts:
+  files:
+      - $BUILD_VERSION
