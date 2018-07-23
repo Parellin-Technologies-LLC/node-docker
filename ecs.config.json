@@ -1,6 +1,6 @@
 [
 	{
-		"name": "node-docker",
+		"name": "nginx-service",
 		"imageUri": "426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest"
 	}
 ]
