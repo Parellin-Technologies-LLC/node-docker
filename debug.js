@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = msg => {
-	if( process.env.NODE_ENV === 'debug' ) {
+	if( process.env.DEBUG ) {
 		console.log( msg );
 	}
 };

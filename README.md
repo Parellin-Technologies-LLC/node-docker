@@ -16,7 +16,7 @@ docker images
 
 Run the docker build:
 ```
-docker run -p 0:80 -d docker-test
+docker run -p 0:3000 -d docker-test
 ```
 
 Get container id:
@@ -36,5 +36,5 @@ docker exec -it [container-id] /bin/bash
 
 Test container:
 ```
-curl -i localhost:80
+curl -i localhost:3000
 ```

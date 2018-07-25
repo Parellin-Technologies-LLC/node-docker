@@ -4,6 +4,7 @@
 	"description": "Docker Test",
 	"main": "index.js",
 	"scripts": {
+		"debug": "DEBUG=true npm start",
 		"docker:build": "docker build -t docker-test .",
 		"docker:login": "$(aws ecr get-login --no-include-email --region us-east-1 --profile parellin)",
 		"docker:push": "docker push 426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
@@ -12,10 +13,11 @@
 		"start": "node index.js",
 		"test": "mocha"
 	},
-	"author": "",
-	"license": "ISC",
+	"author": "Parellin Technologies LLC",
+	"license": "MIT",
 	"dependencies": {
-		"express": "^4.16.3"
+		"express": "^4.16.3",
+		"sleep": "^5.1.1"
 	},
 	"devDependencies": {
 		"chai": "^4.1.2",

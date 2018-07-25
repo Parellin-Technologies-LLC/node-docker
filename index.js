@@ -6,9 +6,12 @@
 'use strict';
 
 const
-	app  = require( './server' ),
-	PORT = 80,
-	HOST = '0.0.0.0';
+	config = require( './package' ),
+	app    = require( './server' ),
+	PORT   = 3000,
+	HOST   = '0.0.0.0';
+
+process.title = config.name;
 
 app.listen( PORT, HOST,
 	() => console.log( `Running on http://${ HOST }:${ PORT }` )
