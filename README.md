@@ -38,3 +38,16 @@ Test container:
 ```
 curl -i localhost:3000
 ```
+
+### Benchmarking
+
+`pm2 start ecosystem.config.js`
+
+`time curl 0.0.0.0:3000/ping` (expected request time ~2ms, expected internal time ~130 μs)
+
+**CPU**
+`curl 0.0.0.0:3000/cpu`
+**Memory**
+`curl 0.0.0.0:3000/mem`
+**IO**
+`curl 0.0.0.0:3000/io`
