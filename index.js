@@ -6,13 +6,32 @@
 'use strict';
 
 const
-	config = require( './package' ),
-	app    = require( './server' ),
-	PORT   = 3000,
-	HOST   = '0.0.0.0';
+	gonfig = require( 'gonfig' ),
+	debug  = require( './debug' );
 
-process.title = config.name;
+gonfig
+	.setLogLevel( gonfig.LEVEL.VERBOSE )
+	.setEnvironment( gonfig.ENV.DEBUG )
+	.load( 'server', 'config/server.json' )
+	.load( 'api', 'config/api.js' )
+	.refresh();
 
-app.listen( PORT, HOST,
-	() => console.log( `Running on http://${ HOST }:${ PORT }` )
+process
+	.on( 'uncaughtException', err => debug( gonfig.getErrorReport( err ) ) )
+	.on( 'unhandledRejection', err => debug( gonfig.getErrorReport( err ) ) )
+	.on( 'SIGINT', () => {
+		debug( 'Received SIGINT, graceful shutdown...' );
+		process.exit( 0 );
+	} )
+	.on( 'exit', code => {
+		debug( `Received exit with code ${ code }, graceful shutdown...` );
+		process.exit( code );
+	} );
+
+const
+	app            = require( './server' ),
+	{ host, port } = gonfig.get( 'server' );
+
+app.listen( port, host,
+	() => console.log( `Running on http://${ host }:${ port }` )
 );
