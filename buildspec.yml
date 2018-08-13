@@ -11,7 +11,6 @@ phases:
     build:
         commands:
         - npm run lint
-        - npm run test
         - BUILD_VERSION=$(npm pack -s)
     post_build:
         commands:

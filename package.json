@@ -15,9 +15,9 @@
 	},
 	"author": "Parellin Technologies LLC",
 	"repository": {
-        "type": "git",
-        "url": "git+https://github.com/Parellin-Technologies-LLC/node-docker.git"
-    },
+		"type": "git",
+		"url": "git+https://github.com/Parellin-Technologies-LLC/node-docker.git"
+	},
 	"license": "MIT",
 	"dependencies": {
 		"express": "^4.16.3",
