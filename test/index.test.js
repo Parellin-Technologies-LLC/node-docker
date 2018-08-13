@@ -5,6 +5,15 @@
  *******************************************************************************************************/
 'use strict';
 
+const gonfig = require( 'gonfig' );
+
+gonfig
+	.setLogLevel( gonfig.LEVEL.NONE )
+	.setEnvironment( gonfig.ENV.TEST )
+	.load( 'server', 'config/server.json' )
+	.load( 'api', 'config/api.js' )
+	.refresh();
+
 const
 	chai           = require( 'chai' ),
 	chaiHTTP       = require( 'chai-http' ),
@@ -17,15 +26,16 @@ chai.use( chaiAsPromised );
 const app = require( '../server' );
 
 describe( 'node test', () => {
-	it( '/ "Hello World" 200 OK',
+	it( `/ "${ gonfig.get( 'name' ) }-${ gonfig.get( 'version' ) }" 200 OK`,
 		done => {
 			chai
 				.request( app )
 				.get( '/' )
 				.end(
 					( e, d ) => {
+						console.log( d.text );
 						expect( d ).to.have.status( 200 );
-						expect( d.body ).to.eq( '"Hello World"' );
+						expect( d.body ).to.eq( `${ gonfig.get( 'name' ) }-v${ gonfig.get( 'version' ) }` );
 						done();
 					}
 				);
