@@ -1,22 +1,30 @@
 version: 0.2
 
 phases:
-    install:
-        commands:
-        - npm install -g mocha
-    pre_build:
-        commands:
-        - echo Installing source NPM dependencies...
-        - npm install
-    build:
-        commands:
-        - npm run lint
-        - BUILD_VERSION=$(npm pack -s)
-    post_build:
-        commands:
-        - echo Build name $BUILD_VERSION
-        - echo Build completed on $(date)
+  install:
+    commands:
+      - apt-get update
+      - apt-get install -y awscli
+      - npm install -g mocha
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - REPOSITORY_URI=426318416515.dkr.ecr.us-east-2.amazonaws.com/boilerplate-api-docker-repo
+      - IMAGE_NAME=boilerplate-qpi-repo
+      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+  build:
+    commands:
+      - BUILD_VERSION=$(npm pack -s)
+      - docker build -t $IMAGE_NAME:latest .
+      - docker tag $IMAGE_NAME:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on $(date)
 artifacts:
-    files:
-    - $BUILD_VERSION
-    - ecs.config.json
+  files:
+      - $BUILD_VERSION
+      - config.json

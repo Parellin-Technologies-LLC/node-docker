@@ -15,5 +15,8 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Open port 3000
 EXPOSE 3000
+
+# Run command "npm start"
 CMD [ "npm", "start" ]
