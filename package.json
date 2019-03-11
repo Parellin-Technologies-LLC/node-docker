@@ -2,15 +2,16 @@
 	"name": "docker-test",
 	"version": "1.0.0",
 	"description": "Docker Test",
-	"main": "index.js",
+	"main": "src/index.js",
 	"scripts": {
-		"debug": "DEBUG=true npm start",
+		"debug": "DEBUG=true npm run dev",
+		"dev": "DEBUG=true nodemon src/index.js",
 		"docker:build": "docker build -t docker-test .",
 		"docker:login": "$(aws ecr get-login --no-include-email --region us-east-1 --profile parellin)",
-		"docker:push": "docker push 426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
-		"docker:tag": "docker tag docker-test:latest 426318416515.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
+		"docker:push": "docker push x.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
+		"docker:tag": "docker tag docker-test:latest x.dkr.ecr.us-east-1.amazonaws.com/docker-test:latest",
 		"lint": "eslint .",
-		"start": "node index.js",
+		"start": "node src/index.js",
 		"test": "mocha"
 	},
 	"author": "Parellin Technologies LLC",
@@ -20,17 +21,18 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"express": "^4.16.3",
-		"gonfig": "^1.0.7",
-		"http-response-class": "^1.2.2",
+		"express": "4.16.4",
+		"gonfig": "1.0.9",
+		"http-response-class": "1.2.4",
 		"on-finished": "^2.3.0",
 		"uuid": "^3.3.2"
 	},
 	"devDependencies": {
-		"chai": "^4.1.2",
+		"chai": "4.2.0",
 		"chai-as-promised": "^7.1.1",
-		"chai-http": "^4.0.0",
-		"eslint": "^5.2.0",
-		"mocha": "^5.2.0"
+		"chai-http": "4.2.1",
+		"eslint": "5.15.1",
+		"mocha": "^5.2.0",
+		"nodemon": "1.18.10"
 	}
 }

@@ -6,14 +6,17 @@
 'use strict';
 
 const
-	gonfig = require( 'gonfig' ),
-	debug  = require( './debug' );
+	gonfig   = require( 'gonfig' ),
+	http     = require( 'http' ),
+	express  = require( 'express' ),
+	app      = express(),
+	{ join } = require( 'path' );
 
 gonfig
 	.setLogLevel( gonfig.LEVEL.VERBOSE )
 	.setEnvironment( gonfig.ENV.DEBUG )
-	.load( 'server', 'config/server.json' )
-	.load( 'api', 'config/api.js' )
+	.load( 'server', join( __dirname, 'config/server.json' ) )
+	.load( 'api', join( __dirname, 'config/api.json' ) )
 	.refresh();
 
 process
@@ -28,10 +31,29 @@ process
 		process.exit( code );
 	} );
 
-const
-	app            = require( './server' ),
-	{ host, port } = gonfig.get( 'server' );
+app.use( require( './lib/inspection' )() );
 
-app.listen( port, host,
-	() => console.log( `Running on http://${ host }:${ port }` )
-);
+gonfig.get( 'api' )
+	.forEach( item => {
+		item.exec = require( join( __dirname, item.exec ) );
+		
+		app[ item.method.toLowerCase() ](
+			item.route,
+			( req, res ) => res ?
+				item.exec( req, res ) :
+				res.status( 500 ).send( 'unknown' )
+		);
+	} );
+
+const server = http
+	.createServer( app )
+	.listen(
+		{
+			port: gonfig.get( 'server' ).port,
+			host: gonfig.get( 'server' ).host
+		},
+		() => {
+			const { address, port } = server.address();
+			console.log( `Running on http://${ address }:${ port }` );
+		}
+	);

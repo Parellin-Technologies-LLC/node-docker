@@ -1,0 +1,37 @@
+[
+	{
+		"route": "/",
+		"method": "GET",
+		"exec": "./lib/home"
+	},
+	{
+		"route": "/ping",
+		"method": "GET",
+		"exec": "./lib/ping"
+	},
+	{
+		"route": "/cpu",
+		"method": "GET",
+		"exec": "./lib/cpu"
+	},
+	{
+		"route": "/mem",
+		"method": "GET",
+		"exec": "./lib/mem"
+	},
+	{
+		"route": "/io",
+		"method": "GET",
+		"exec": "./lib/io"
+	},
+	{
+		"route": "/timeout",
+		"method": "GET",
+		"exec": "./lib/timeout"
+	},
+	{
+		"route": "*",
+		"method": "ALL",
+		"exec": "./lib/methodNotAllowed"
+	}
+]

@@ -1,22 +1,18 @@
-FROM node:9
+FROM node:10
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /opt/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
+RUN npm i -g pm2
+RUN npm ci --only=production
 
-# Bundle app source
-COPY . .
+COPY ./src ./src
+COPY ./ecosystem.config.js .
 
 # Open port 3000
 EXPOSE 3000
 
 # Run command "npm start"
-CMD [ "npm", "start" ]
+CMD [ "pm2-runtime", "start", "ecosystem.config.js", "--env", "production" ]

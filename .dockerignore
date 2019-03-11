@@ -1,2 +1,11 @@
+.editorconfig
+.eslintrc.js
+.gitignore
+.npmignore
+buildspec.yml
+ecs.config.json
+LICENSE
+README.md
+
 node_modules
 npm-debug.log
